@@ -1,0 +1,17 @@
+<app-top-banner></app-top-banner>
+
+<div *ngIf="userList" class="list">
+  <ul>
+    <li *ngFor="let u of userList">
+      <div class="avt">
+        <img [src]="u.photoUrl | imageServer"
+        class="avatar"/>
+      </div>
+      <p>{{u.name}}</p>
+      <p>{{u.nickName}}</p>
+      <p>{{u.homeCountry}}</p>
+      <button pButton label="temporary delete" type="button" class="p-button-danger" icon="pi pi-trash" (click)="delete(u)"  ></button>
+    </li>
+  </ul>
+</div>
+<button pButton label="view profil "  type="button" class="p-button-warning" (click)="showProfil()"></button>

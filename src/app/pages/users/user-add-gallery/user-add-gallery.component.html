@@ -1,0 +1,15 @@
+
+<div class="dropzone" appDnd (fileDropped)="onFileDrop($event)">
+  <!-- <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target.files)"> -->
+  <img src="/assets/upload-icon.png" alt="">
+  <h3>Drag and drop file here</h3>
+  <!-- <h3>or</h3>
+  <label for="fileDropRef">Browse for file</label> -->
+</div>
+<div class="img-list">
+  <div class="onefile" *ngFor="let item of images">
+    <img [src]="item">
+  </div>
+</div>
+
+

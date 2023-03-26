@@ -1,0 +1,275 @@
+
+<app-top-banner></app-top-banner>
+
+  <div *ngIf="user" class="container">
+    <div class="UserInfo">
+        <div class="infocard">
+          <div class="imgbox">
+
+            <div class="avt">
+              <img [src]="user.photoUrl | imageServer" class="avatar">
+            </div>
+          </div>
+          <div class="name">
+            <p><b>{{user.nickName}}</b> </p>
+            <p><b>{{user.homeCountry}}</b> </p>
+            <button pButton class="p-button-text" (click)="displayInfo = true">
+              <i class="pi pi-info-circle" style="font-size: 1rem;"></i>
+            </button>
+            </div>
+            <p-dialog [modal]="true" header="Personal Info" [visible]="displayInfo">
+              <p>Name: <b>{{user.name}}</b></p>
+              <p>Nickname: <b>{{user.nickName}}</b></p>
+              <p>location: <b>{{user.homeCountry}}</b></p>
+              <p>BirthDate: <b>{{user.birthDate | toDate | date: "dd MMMM yyyy"}}</b> </p>
+              <div *ngIf="user.gender === 0"><p>Gender: <b>Male </b></p></div>
+              <div *ngIf="user.gender === 1"><p>Gender: <b>Female</b> </p></div>
+              <div *ngIf="user.gender === 2"><p>Gender: <b>Other</b></p></div>
+              <div *ngIf="user.gender === null"><p>Gender: <b>Unshared</b></p></div>
+              <div><button pButton (click)="displayInfo = false" class="p-button-text" icon="pi pi-check">ok</button></div>
+            </p-dialog>
+          </div>
+          <!-- <div class="btnEdit">
+            <button pButton class="p-button-outlined p-button-rounded" style="color: black; padding: 0.5;" (click)="viewModalEdit()">Edit</button>
+          </div> -->
+        </div>
+        <div class="btnEdit">
+          <button pButton class="p-button-outlined p-button-rounded" style="color: black; padding: 0.5;" (click)="viewModalEdit()">Edit</button>
+        </div>
+    <!--container2 (bio-contain + lists-contain(toVisiList + visiList))-->
+    <!--------------end contain2---------------------->
+    <div class="tripbox">
+    <div class="bio">
+      <p-card id="bios">
+          <h3>Biography</h3>
+          <p>{{user.biography}}</p>
+      </p-card>
+    </div>
+    <div class="lists">
+      <div class="card1">
+        <p-card styleClass="tovisit">
+          <h3>to visit</h3>
+        <p-table [value]="user.citiesToVisit" [scrollable]="true" scrollHeight="400px" [tableStyle]="{'min-width': '100%'}" [resizableColumns]="true">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>City / Country</th>
+                <th>Comment</th>
+                <th><button id="btnAddV" pButton type="button" class="p-button-text p-button-sm" icon="pi pi-plus" (click)="viewModalForAddCty()" style="border: 5px black;">
+                </button></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-u>
+                <tr>
+                  <td>{{u.cityName}}</td>
+                  <td>{{u.comment}}</td>
+                  <td><button pButton  type="button" class="p-button-danger" icon="pi pi-trash" (click)="viewModalConfirm1(u.id)" ></button> </td>
+                </tr>
+
+
+            </ng-template>
+          </p-table>
+        </p-card>
+        </div>
+
+        <div class="card2">
+          <p-card>
+          <h3>visited</h3>
+          <p-table [value]="user.visitedCities" scrollHeight="400px" [scrollable]="true" [tableStyle]="{'min-width': '100%'}" [resizableColumns]="true" columnResizeMode="expand" >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>City</th>
+                    <th>Experience</th>
+                    <th>Recomandation</th>
+                    <th>Photo gallery</th>
+                    <th><button pButton type="button" class="p-button-text p-button-sm" icon="pi pi-plus" (click)="viewAddVCmodal()">
+                    </button></th>
+
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-u>
+                <tr>
+                    <td class="td">{{u.name}}</td>
+                    <td class="td"> {{u.experience}} </td>
+                    <td class="td">{{u.recomandation}}</td>
+                    <td >
+                      <button *ngIf="u.gallery === null" pButton type="button" class="p-button-text" >
+                        <i title="gallery" class="pi pi-images" style="font-size: 1.3rem" (click)="viewModalAddGallery(u.id)"></i>
+                      </button>
+
+                      <button *ngIf="u.gallery !== null" pButton type="button" class="p-button-text" >
+                        <i title="gallery" class="pi pi-images" style="font-size: 1.3rem;color: rgb(45, 192, 16)" (click)="getGallery(u.gallery.galleryId)"></i>
+                      </button>
+                    </td>
+                    <td> <button pButton  type="button" class="p-button-danger" icon="pi pi-trash" (click)="viewModalConfirm2(u.id)"  ></button> </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </p-card>
+            </div>
+    </div>
+        </div>
+      </div>
+
+
+
+<!--------------------------------------------------------------------------------------------------------------->
+<!------------------------------------- modals in this part of page---------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------->
+
+
+<div class="confirm2">
+  <p-dialog [modal]="true" header="Are you sure?" [(visible)]="displayConfirm2">
+    <p>You wish to delete this city?</p>
+    <div class="btnCfm2">
+      <div class="btnYes">
+        <button pButton type="button" class="p-button-text p-button-warning"  (click)="removeVCity()" >Yes</button>
+      </div>
+      <div class="btnNo">
+        <button pButton type="button"  class="p-button-text p-button-danger" (click)="displayConfirm2 = false">No</button>
+      </div>
+    </div>
+  </p-dialog>
+</div>
+
+
+<div class="AddGallery" >
+  <form id="gallery" [formGroup]="fgGallery" (ngSubmit)="addGallery()">
+    <p-dialog [modal]="true" header="Create gallery" [(visible)]="displayGalleryAdd">
+      <div id="ig" class="field col-12 md:col-4">
+        <span class="p-float-label">
+          <input type="text" id="Name" pInputText formControlName="title">
+          <label for="Name"> Gallery's Name </label>
+        </span>
+      </div>
+    <div>
+      <button pButton  label="Confirm" (click)="addGallery()" ></button>
+    </div>
+    </p-dialog>
+  </form>
+</div>
+
+<div class="confirm1">
+  <p-dialog [modal]="true" header="Are you sure?" [(visible)]="displayConfirm1">
+    <p>You wish to delete this city?</p>
+    <div class="btnCfm1">
+      <div class="btnYes">
+        <button pButton type="button" class="p-button-text p-button-warning" (click)="removeCity()" >Yes</button>
+      </div>
+      <div class="btnNo">
+        <button pButton type="button"  class="p-button-text p-button-danger" (click)="displayConfirm1 = false">No</button>
+      </div>
+    </div>
+  </p-dialog>
+</div>
+
+
+<div class="modalEdit">
+  <p-dialog [modal]="true" header="Modifier vos informations" [(visible)]="displayViewEdit" [breakpoints]="{'1060px': '60vw', '640px': '100vw'}">
+      <app-user-edit (onSubmit)="ngOnInit()" ></app-user-edit>
+  </p-dialog>
+</div>
+
+<div class="modalAddCity">
+  <form id="for" [formGroup]="fg" (ngSubmit)="doneCity()">
+    <p-dialog [modal]="true" header="Add a new city" [(visible)]="displayAddCity" [breakpoints]="{'1060px': '60vw', '640px': '100vw'}">
+      <div  class="form">
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input type="text" id="name" pInputText formControlName="cityName">
+            <label for="name"> City </label>
+          </span>
+        </div>
+
+        <div id="in" class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input type="text" id="cmt" pInputText formControlName="comment">
+            <label for="cmt"> Comment </label>
+          </span>
+        </div>
+        <div class="btnCityDone">
+
+        </div>
+          <button pButton type="button" label="Add" (click)="doneCity()" ></button>
+        </div>
+    </p-dialog>
+  </form>
+</div>
+
+<div class="modalAddVisitedCity">
+  <form id="favc" [formGroup]="fg2" (ngSubmit)="doneVCity()">
+    <p-dialog [modal]="true" header="Add a new city" [(visible)]="displayAddVisCity" [breakpoints]="{'1060px': '60vw', '640px': '100vw'}">
+      <div  class="form">
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input type="text" id="name" pInputText formControlName="name">
+            <label for="name"> City </label>
+          </span>
+        </div>
+
+        <div id="in" class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input type="text" id="cmt" pInputText formControlName="experience">
+            <label for="cmt"> Experience </label>
+          </span>
+        </div>
+
+        <div id="in" class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input type="text" id="cmt" pInputText formControlName="recomandation">
+            <label for="cmt"> Recomandation </label>
+          </span>
+        </div>
+
+        <div class="btnVCityDone">
+          <button pButton type="button" label="Add" (click)="doneVCity()" ></button>
+        </div>
+      </div>
+    </p-dialog>
+  </form>
+</div>
+
+<p-dialog [modal]="true" header="Upload image" [(visible)]="displayModalAddImage">
+  <app-user-add-gallery [galleryId]="galleryId"></app-user-add-gallery>
+  <button pButton label="confirm" (click)="closeModalAddImage()" ></button>
+</p-dialog>
+
+
+<p-dialog [modal]="true" header="Gallery" [(visible)]="displayModalViewGallery" [breakpoints]="{'860px': '60vw', '540px': '100vw'}">
+  <ng-container *ngIf="gallery">
+
+    <button pButton type="button" class="p-button-text" >
+      <i title="gallery" class="pi pi-plus-circle" style="font-size: 1.3rem;color: rgb(0, 17, 128)" (click)="viewModalAddImage(gallery.galleryId)"></i>
+    </button>
+    <div *ngIf="images.length===0">
+      <h4>this gallery dont have any image, add any image</h4>
+    </div>
+
+
+    <ng-container *ngIf="images.length>0">
+      <div>
+        <p-carousel [value]="images" orientation="vertical" [style]="{'max-width':'400px', 'margin-top':'2em'}" verticalViewPortHeight="452px" [numVisible]="1" [numScroll]="1">
+          <ng-template let-img pTemplate="item">
+              <div class="product-item">
+                  <div class="product-item-content">
+                      <div class="mb-3">
+                          <img [src]="'https://localhost:7104/GallerysImage/' + img.imageUrl"  class="product-image" />
+                      </div>
+                      <div>
+                          <div class="car-buttons mt-5">
+                              <button pButton icon="pi pi-trash" class="p-button-text" (click)="deleteImg(img.imageId)"></button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+      </p-carousel>
+      </div>
+    </ng-container>
+  </ng-container>
+</p-dialog>
+
+
+<!-------------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------------------------->
+
+

@@ -1,0 +1,50 @@
+<header style="background-color: black;">
+  <button id="btn" pButton (click)="viewSidebar()" class="p-button-text"><i title="Menu" class="pi pi-bars" style="font-size: 1.5rem"></i></button>
+  <img class="banner" src="../assets/logoTB.png" >
+</header>
+<p-sidebar [(visible)]="sidebarView" [style]="{width:'4em'}">
+  <div class="menu">
+      <div class="userLink" *ngIf="islogged === true">
+        <a class="a2" href="profil">
+          <i title="Home" class="pi pi-user" style="font-size: 1.3rem"></i>
+        </a>
+      </div>
+      <div class="homeLink">
+        <a class="a2" href="home">
+          <i title="Home" class="pi pi-home" style="font-size: 1.3rem"></i>
+        </a>
+      </div>
+      <div class="inscLink" *ngIf="islogged === false">
+        <a class="a1" href="inscription">
+          <i title="Join now" class="pi pi-user-plus" style="font-size: 1.3rem"></i>
+        </a>
+      </div>
+      <div class="listLink">
+        <a class="a2" href="userlist">
+          <i title="Member list" class="pi pi-list" style="font-size: 1.3rem"></i>
+        </a>
+      </div>
+      <div class="loginLink" *ngIf="islogged === false">
+        <a href="login">
+          <i title="Login" class="pi pi-sign-in" style="font-size: 1.3rem"></i>
+        </a>
+      </div>
+      <div class="logouBtn" *ngIf="islogged === true" >
+        <i title="Logout" class="pi pi-sign-out" style="font-size: 1.3rem" (click)="viewLogoutMod()" ></i>
+      </div>
+  </div>
+</p-sidebar>
+
+  <div class="confirmLogout">
+    <p-dialog header="Are you sure?" [(visible)]="logoutConfirm">
+      <p>Close session?</p>
+      <div class="btnCfm">
+        <div class="btnYes">
+          <button pButton type="button" class="p-button-text p-button-warning" (click)="logout()" >Yes</button>
+        </div>
+        <div class="btnNo">
+          <button pButton type="button"  class="p-button-text p-button-danger" (click)="viewLogoutMod()">No</button>
+        </div>
+      </div>
+    </p-dialog>
+  </div>

@@ -1,0 +1,79 @@
+
+<form id="for" [formGroup]="fg" (ngSubmit)="done()">
+  <div class="formBox">
+    <div class="imgProfil">
+      <input type="file" (change)="fileChangeEvent($event)" />
+      <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="false"
+      [aspectRatio]="4 / 3"
+      [hideResizeSquares]="false"
+      [roundCropper]="true"
+      format="jpeg"
+      (imageCropped)="imageCropped($event)"
+      ></image-cropper>
+    </div>
+    <div class="txtInput">
+
+      <div class="img2">
+        <img [src]="croppedImage"
+        class="avatar"
+        />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <span class="p-float-label">
+          <input type="text" id="name" pInputText formControlName="name">
+          <label for="name"> Name </label>
+      </span>
+    </div>
+
+    <div id="in" class="field col-12 md:col-4">
+      <span class="p-float-label">
+        <input type="text" id="Nick-Name" pInputText formControlName="nickName">
+        <label for="Nick-Name"> Nick-Name </label>
+      </span>
+    </div>
+
+    <div class="field col-12 md:col-4">
+      <span class="p-float-label">
+          <input pInputText type="date" inputId="calendar" formControlName="birthDate" >
+          <label for="calendar">Calendar</label>
+      </span>
+  </div>
+
+    <div id="in" class="field col-12 md:col-4">
+      <span class="p-float-label">
+        <!-- <input type="text" id="hc" pInputText formControlName="homeCountry">
+        <label for="hc"> Home Country</label> -->
+        <select formControlName="homeCountry">
+          <option value="">select country</option>
+          <option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</option>
+        </select>
+      </span>
+    </div>
+
+    <div class="select">
+      <p class="pSel">select Gender</p>
+        <select formControlName="gender"  >
+          <option [ngValue]="0">Homme</option>
+          <option [ngValue]="1">Femme</option>
+          <option [ngValue]="2">Autre</option>
+        </select>
+    </div>
+
+    <div id="bio" class="field col-12 md:col-4">
+      <span class="p-float-label">
+        <textarea id="b" [rows]="5" [cols]="30" pInputTextarea [autoResize]="true" formControlName="biography"></textarea>
+        <!-- <input type="text" id="b" pInputText formControlName="biography"> -->
+        <label for="b"> Biography</label>
+      </span>
+    </div>
+
+
+    <div id="btn">
+      <button pButton type="button" label="Confirm" (click)="done()" ></button>
+    </div>
+  </div>
+</div>
+</form>

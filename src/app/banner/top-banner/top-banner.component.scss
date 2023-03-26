@@ -1,0 +1,62 @@
+
+.liens{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-top: 4px;
+  margin-left: 10px;
+  margin-right: 20px;
+  justify-content: space-between;
+}
+
+#btn{
+  margin-left: 55px;
+  color: white;
+}
+
+header{
+  height: 125px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+a{
+  color: #1b003a;
+}
+
+.menu{
+  background-color: white;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 45px;
+  .homelink{
+    padding-bottom: 4px;
+  }
+  .inscLink{
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .listLink{
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .loginLink{
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .logouBtn{
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.banner{
+  margin-top: 20px;
+  padding-left: 35%;
+  height: 90px;
+  width: auto;
+}
+

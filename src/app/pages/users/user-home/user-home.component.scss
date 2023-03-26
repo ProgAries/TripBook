@@ -1,0 +1,51 @@
+// body{
+//   height: 100vh;
+//   width: 100vh;
+// }
+.container{
+  //position: fixed;
+  display: flex;
+  padding-top: 120px;
+  height: 80vh;
+  width: 100%;
+  flex-direction: column;
+  margin: 0px,0px,0px,0px;
+  border: 2px;
+  background-image: url(/assets/black.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.box1{
+  display: flex;
+  justify-content: space-around;
+  //background-color: violet;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  height: 70%;
+  >.info{
+    //background-color: rgb(113, 13, 113);
+    font-size: large;
+  }
+}
+.box2{
+  padding-top: 0px;
+  background-color: gray;
+  height: 25%;
+}
+h2{
+  width: 35vh;
+}
+
+.redirect{
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  .btnLogin{
+    padding: 5px;
+  }
+  .btnRedi{
+    padding: 5px;
+  }
+}
